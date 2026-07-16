@@ -53,6 +53,168 @@
   ::selection { background: rgba(69,224,207,0.3); }
   @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-16px) rotate(2deg); } }
   @keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+  /* ===== SAFETY NET (all screen sizes) ===== */
+  body { overflow-x: hidden; }
+  .mobile-nav-actions, .mobile-nav-menu { display: none; }
+
+  /* ===== MOBILE / TABLET ===== */
+  @media (max-width: 900px) {
+    /* --- Prevent image overflow on mobile --- */
+    image-slot { width: 100% !important; max-width: 100% !important; height: 100% !important; }
+    img { max-width: 100%; height: auto; }
+
+    /* --- NAV --- */
+    nav { padding: 10px 16px !important; }
+    nav > a:first-child img { height: 20px !important; }
+    .desktop-nav-links { display: none !important; }
+    .mobile-nav-actions { display: flex !important; align-items: center; gap: 8px; }
+    .mobile-nav-menu {
+      position: absolute !important; top: calc(100% + 1px); left: 12px; right: 12px;
+      display: flex !important; flex-direction: column; gap: 4px; max-height: calc(100vh - 76px);
+      overflow-y: auto; padding: 12px; border-radius: 12px;
+    }
+
+    /* --- HERO --- */
+    #top { height: 220vh !important; }
+    #top h1 { font-size: 28px !important; }
+    #top h2 { font-size: 22px !important; }
+    #top p, #top p * { font-size: 14px !important; max-width: 300px !important; margin-left: auto !important; margin-right: auto !important; }
+    #top a { padding: 12px 22px !important; font-size: 13px !important; }
+    #top > div > div:first-of-type { padding-bottom: 4vh !important; padding-left: 16px !important; padding-right: 16px !important; }
+    #top > div > div:nth-of-type(2) { padding-bottom: 8vh !important; padding-left: 16px !important; padding-right: 16px !important; }
+    #top > div > div:nth-of-type(3) { padding-top: 10vh !important; padding-left: 16px !important; padding-right: 16px !important; }
+
+    /* --- ALL SECTIONS: reduce horizontal padding --- */
+    #featured, #bestsellers, #features, #custom, #instagram, #about, #contact {
+      padding-left: 20px !important; padding-right: 20px !important;
+    }
+    footer > div:first-child { padding-left: 20px !important; padding-right: 20px !important; }
+    footer > div:last-of-type { padding-left: 20px !important; padding-right: 20px !important; }
+
+    /* --- SECTION HEADERS stack --- */
+    #featured > div:first-child,
+    #bestsellers > div:first-child,
+    #instagram > div:first-child {
+      flex-direction: column !important; gap: 6px !important; margin-bottom: 20px !important;
+      align-items: flex-start !important;
+    }
+
+    /* --- PRODUCT GRIDS: 2 cols + fix overflow --- */
+    #featured > div:nth-child(2),
+    #bestsellers > div:nth-child(2) {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 14px !important;
+    }
+    /* CRITICAL: allow grid items to shrink below their content min-width */
+    #featured > div:nth-child(2) > div,
+    #bestsellers > div:nth-child(2) > div {
+      min-width: 0 !important; overflow: hidden !important;
+    }
+    /* Keep product media large without clipping the image slot. */
+    #featured > div:nth-child(2) > div > div:first-child,
+    #bestsellers > div:nth-child(2) > div > div:first-child {
+      height: clamp(220px, 32vw, 260px) !important;
+      min-height: 0 !important; max-height: none !important;
+    }
+
+    /* --- FEATURES --- */
+    #features > div:last-child {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 10px !important;
+    }
+
+    /* --- INSTAGRAM --- */
+    #instagram > div:last-child {
+      grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important;
+    }
+
+    /* --- CUSTOM BANDANA: stack --- */
+    #custom > div:first-child {
+      grid-template-columns: 1fr !important; gap: 24px !important; padding: 32px 20px !important;
+    }
+    #custom > div:first-child > div:last-child { height: auto !important; min-height: 260px !important; }
+    #custom img[alt*="custom bandana"] { position: static !important; width: auto !important; height: auto !important; max-width: 260px !important; transform: none !important; margin: 0 auto !important; display: block !important; }
+    #custom img[alt*="rabbit"] { display: none !important; }
+
+    /* --- ABOUT: stack --- */
+    #about > div:first-child { grid-template-columns: 1fr !important; gap: 28px !important; }
+    #about > div:nth-child(2) { grid-template-columns: 1fr !important; gap: 16px !important; }
+    #about img[alt*="monster"] { max-width: 160px !important; }
+    #about > div:nth-child(2) > div {
+      flex-direction: column !important; gap: 14px !important; text-align: center !important;
+    }
+    #about > div:nth-child(2) > div img { margin: 0 auto !important; }
+
+    /* --- CONTACT: stack --- */
+    #contact > div:first-child {
+      grid-template-columns: 1fr !important; gap: 28px !important; padding: 32px 20px !important;
+    }
+    #contact img[alt*="storefront"] { max-width: 220px !important; }
+
+    /* --- FOOTER --- */
+    footer > div:first-child > div:last-child { grid-template-columns: 1fr !important; gap: 24px !important; }
+    footer > div:first-child > div:last-child > div:last-child { text-align: left !important; }
+    footer > div:last-of-type { flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+    footer > div:first-child > div:first-child { font-size: 24px !important; }
+    footer > div:first-child > div:nth-child(2) { gap: 8px !important; }
+    footer > div:first-child > div:nth-child(2) a { padding: 10px 14px !important; font-size: 11px !important; }
+  }
+
+  /* ===== NARROW MOBILE ===== */
+  @media (max-width: 640px) {
+    #featured > div:nth-child(2),
+    #bestsellers > div:nth-child(2) {
+      grid-template-columns: 1fr !important; gap: 16px !important;
+    }
+    #featured > div:nth-child(2) > div > div:first-child,
+    #bestsellers > div:nth-child(2) > div > div:first-child {
+      height: clamp(230px, 65vw, 300px) !important;
+    }
+  }
+
+  /* ===== SMALL PHONES ===== */
+  @media (max-width: 480px) {
+    /* NAV */
+    nav { padding: 8px 10px !important; }
+    nav > a:first-child img { height: 18px !important; }
+    .mobile-nav-actions { gap: 6px; }
+    .mobile-nav-actions > button { width: 32px !important; height: 32px !important; font-size: 13px !important; }
+    .mobile-nav-menu { left: 8px; right: 8px; }
+
+    /* HERO */
+    #top { height: 200vh !important; }
+    #top h1 { font-size: 22px !important; }
+    #top h2 { font-size: 18px !important; }
+    #top p, #top p * { font-size: 13px !important; max-width: 260px !important; }
+    #top a { padding: 10px 16px !important; font-size: 12px !important; }
+    #top > div > div:first-of-type > div:nth-child(3) { flex-direction: column !important; align-items: center !important; gap: 8px !important; }
+
+    /* FEATURES: 2 columns */
+    #features > div:last-child {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important;
+    }
+
+    /* INSTAGRAM: 2 columns */
+    #instagram > div:last-child {
+      grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important;
+    }
+
+    /* CUSTOM BANDANA */
+    #custom > div:first-child { padding: 24px 14px !important; }
+    #custom h2 { font-size: 22px !important; }
+
+    /* CONTACT */
+    #contact > div:first-child { padding: 24px 14px !important; }
+    #contact > div:first-child > div:last-child > div:last-child { flex-direction: column !important; }
+    #contact > div:first-child > div:last-child > div:last-child a { justify-content: center !important; }
+
+    /* ABOUT */
+    #about > div:nth-child(2) > div { padding: 20px !important; }
+
+    /* FOOTER */
+    footer > div:first-child > div:first-child { font-size: 20px !important; }
+    footer > div:first-child > div:nth-child(2) { flex-direction: column !important; }
+    footer > div:first-child > div:nth-child(2) a { width: auto !important; justify-content: center !important; }
+  }
 </style>
 </helmet>
 
@@ -65,7 +227,7 @@
     <a href="#top" style="display:flex;align-items:center;gap:10px">
       <img src="assets/logo.png" alt="TOTEM" style="height:26px;display:block;filter:{{ t.logoFilter }}">
     </a>
-    <div style="display:flex;align-items:center;gap:34px;font-size:14px;letter-spacing:0.08em;text-transform:uppercase">
+    <div class="desktop-nav-links" style="display:flex;align-items:center;gap:34px;font-size:14px;letter-spacing:0.08em;text-transform:uppercase">
       <div onMouseEnter="{{ openCollection }}" onMouseLeave="{{ closeCollection }}" style="position:relative;padding:10px 0">
         <a href="#featured" style="display:flex;align-items:center;gap:6px">Collection <span style="font-size:9px;color:{{ t.cyanText }}">▼</span></a>
         <sc-if value="{{ collectionOpen }}" hint-placeholder-val="{{ false }}">
@@ -85,6 +247,27 @@
       <button type="button" onClick="{{ toggleTheme }}" title="{{ themeLabel }}" style="cursor:pointer;background:transparent;border:1px solid {{ t.border18 }};border-radius:99px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ t.text }};font-family:inherit;padding:0;transition:border-color 0.25s" style-hover="border-color:#45E0CF">{{ themeIcon }}</button>
       <a href="https://totemkit.com/shop/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;border:1px solid {{ t.border18 }};border-radius:99px;padding:8px 18px" style-hover="border-color:#45E0CF">Shop ↗</a>
     </div>
+    <div class="mobile-nav-actions">
+      <button type="button" onClick="{{ toggleTheme }}" title="{{ themeLabel }}" aria-label="{{ themeLabel }}" style="cursor:pointer;background:transparent;border:1px solid {{ t.border18 }};border-radius:99px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ t.text }};font-family:inherit;padding:0">{{ themeIcon }}</button>
+      <button type="button" onClick="{{ toggleMobileMenu }}" title="{{ mobileMenuLabel }}" aria-label="{{ mobileMenuLabel }}" aria-expanded="{{ mobileMenuOpen }}" aria-controls="mobile-nav-menu" style="cursor:pointer;background:transparent;border:1px solid {{ t.border18 }};border-radius:99px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:17px;color:{{ t.text }};font-family:inherit;padding:0">{{ mobileMenuIcon }}</button>
+    </div>
+    <sc-if value="{{ mobileMenuOpen }}" hint-placeholder-val="{{ false }}">
+      <div id="mobile-nav-menu" class="mobile-nav-menu" style="background:{{ t.menuBg }};backdrop-filter:blur(18px);border:1px solid {{ t.border }};box-shadow:0 18px 48px rgba(0,0,0,0.28);font-size:14px;letter-spacing:0.08em;text-transform:uppercase">
+        <a href="#featured" onClick="{{ closeMobileMenu }}" style="padding:11px 12px;border-radius:8px;font-weight:600">Collection</a>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:0 4px 8px;text-transform:none;letter-spacing:0">
+          <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="4">
+            <a href="{{ cat.url }}" target="_blank" rel="noopener" onClick="{{ closeMobileMenu }}" style="display:flex;flex-direction:column;gap:2px;padding:9px 8px;border-radius:8px;border:1px solid {{ t.border }}">
+              <span style="font-size:12px;font-weight:600">{{ cat.name }}</span>
+              <span style="font-size:10px;color:{{ t.muted }}">{{ cat.detail }}</span>
+            </a>
+          </sc-for>
+        </div>
+        <a href="#about" onClick="{{ closeMobileMenu }}" style="padding:11px 12px;border-radius:8px">About us</a>
+        <a href="#contact" onClick="{{ closeMobileMenu }}" style="padding:11px 12px;border-radius:8px">Contact</a>
+        <a href="#custom" onClick="{{ closeMobileMenu }}" style="padding:11px 12px;border-radius:8px;color:{{ t.orangeText }}">Custom bandana</a>
+        <a href="https://totemkit.com/shop/" target="_blank" rel="noopener" onClick="{{ closeMobileMenu }}" style="padding:11px 12px;border-radius:8px;color:{{ t.cyanText }}">Shop ↗</a>
+      </div>
+    </sc-if>
   </nav>
 
   <!-- ============ HERO (particles: logo -> ring -> ridge) ============ -->
@@ -339,7 +522,7 @@ class Component extends DCLogic {
     super(props);
     let savedTheme = 'dark';
     try { savedTheme = localStorage.getItem('totem-theme') || 'dark'; } catch (e) {}
-    this.state = { collectionOpen: false, theme: savedTheme };
+    this.state = { collectionOpen: false, mobileMenuOpen: false, theme: savedTheme };
     this.navRef = React.createRef();
     this.cap0Ref = React.createRef();
     this.cap1Ref = React.createRef();
@@ -459,6 +642,11 @@ class Component extends DCLogic {
       collectionOpen: this.state.collectionOpen,
       openCollection: () => this.setState({ collectionOpen: true }),
       closeCollection: () => this.setState({ collectionOpen: false }),
+      mobileMenuOpen: this.state.mobileMenuOpen,
+      mobileMenuIcon: this.state.mobileMenuOpen ? '\u00D7' : '\u2630',
+      mobileMenuLabel: this.state.mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu',
+      toggleMobileMenu: () => this.setState({ mobileMenuOpen: !this.state.mobileMenuOpen }),
+      closeMobileMenu: () => this.setState({ mobileMenuOpen: false }),
       navRef: this.navRef,
       cap0Ref: this.cap0Ref,
       cap1Ref: this.cap1Ref,
