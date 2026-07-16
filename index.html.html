@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet">
+<meta name="ext-resource-dependency" content="assets/mravka_tymno_sinio.png">
+<meta name="ext-resource-dependency" content="assets/fotoaparati_sinio.png">
+<meta name="ext-resource-dependency" content="assets/mechki_rozova.png">
+<meta name="ext-resource-dependency" content="assets/pirati_cherveno.png">
+<meta name="ext-resource-dependency" content="assets/gorsko_prikluchenie_zeleno.png">
+<meta name="ext-resource-dependency" content="assets/borova-gora_cherno.png">
+<meta name="ext-resource-dependency" content="assets/fiurfiun_sinio.png">
+<meta name="ext-resource-dependency" content="assets/ig-don-kihot.png">
+<meta name="ext-resource-dependency" content="assets/ig-samurai.png">
+<meta name="ext-resource-dependency" content="assets/ig-mravka-rozovo.png">
+<meta name="ext-resource-dependency" content="assets/ig-veshtica.png">
+<meta name="ext-resource-dependency" content="assets/ig-dqvoli.png">
+<meta name="ext-resource-dependency" content="assets/ig-magiosnica.png">
+<meta name="ext-resource-dependency" content="assets/trail-1.jpg">
+<meta name="ext-resource-dependency" content="assets/trail-2.jpg">
+<meta name="ext-resource-dependency" content="assets/trail-3.jpg">
+<meta name="ext-resource-dependency" content="assets/trail-4.jpg">
+<meta name="ext-resource-dependency" content="assets/trail-5.jpg">
+<meta name="ext-resource-dependency" content="assets/trail-6.jpg">
+<meta name="ext-resource-dependency" content="assets/about-lidia.png">
+<meta name="ext-resource-dependency" content="assets/about-ivaylo.png">
+<meta name="ext-resource-dependency" content="assets/about-studio-1.png">
+<meta name="ext-resource-dependency" content="assets/about-studio-2.png">
+<meta name="ext-resource-dependency" content="assets/monster-line.png">
+<meta name="ext-resource-dependency" content="assets/shop-illustration.png">
+<meta name="ext-resource-dependency" content="assets/icon-high-quality.png">
+<meta name="ext-resource-dependency" content="assets/icon-ultimate-stretch.png">
+<meta name="ext-resource-dependency" content="assets/icon-uv50.png">
+<meta name="ext-resource-dependency" content="assets/icon-windproof.png">
+<meta name="ext-resource-dependency" content="assets/icon-breathable.png">
+<meta name="ext-resource-dependency" content="assets/icon-quick-drying.png">
+<meta name="ext-resource-dependency" content="assets/icon-soft.png">
+<script src="assets/hero-particles.js"></script>
+<script src="assets/image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #070B14; transition: background 0.3s; }
+  a { color: #E9F0F7; text-decoration: none; }
+  a:hover { color: #45E0CF; }
+  ::selection { background: rgba(69,224,207,0.3); }
+  @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-16px) rotate(2deg); } }
+  @keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#070B14"></rect><g transform="translate(30,30) scale(0.4)"><rect x="10" y="0" width="80" height="70" rx="6" fill="#45E0CF"></rect><path d="M10 70 L50 100 L90 70 Z" fill="#45E0CF"></path></g></svg></template>
+
+<div style="background:{{ t.bg }};color:{{ t.text }};font-family:'Space Grotesk',sans-serif;min-height:100vh;transition:background 0.3s,color 0.3s">
+
+  <!-- ============ NAV ============ -->
+  <nav ref="{{ navRef }}" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;transition:background 0.3s,border-color 0.3s;background:rgba(7,11,20,0);border-bottom:1px solid rgba(255,255,255,0);backdrop-filter:blur(0px)">
+    <a href="#top" style="display:flex;align-items:center;gap:10px">
+      <img src="assets/logo.png" alt="TOTEM" style="height:26px;display:block;filter:{{ t.logoFilter }}">
+    </a>
+    <div style="display:flex;align-items:center;gap:34px;font-size:14px;letter-spacing:0.08em;text-transform:uppercase">
+      <div onMouseEnter="{{ openCollection }}" onMouseLeave="{{ closeCollection }}" style="position:relative;padding:10px 0">
+        <a href="#featured" style="display:flex;align-items:center;gap:6px">Collection <span style="font-size:9px;color:{{ t.cyanText }}">▼</span></a>
+        <sc-if value="{{ collectionOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:100%;left:-20px;width:300px;background:{{ t.menuBg }};backdrop-filter:blur(18px);border:1px solid {{ t.border }};border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:2px;text-transform:none;letter-spacing:0">
+            <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="4">
+              <a href="{{ cat.url }}" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:10px" style-hover="background:rgba(69,224,207,0.08)">
+                <span style="font-size:14px;font-weight:600">{{ cat.name }}</span>
+                <span style="font-size:12px;color:{{ t.muted }}">{{ cat.detail }}</span>
+              </a>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+      <a href="#about">About us</a>
+      <a href="#contact">Contact</a>
+      <a href="#custom" style="color:{{ t.orangeText }}">Custom bandana</a>
+      <button type="button" onClick="{{ toggleTheme }}" title="{{ themeLabel }}" style="cursor:pointer;background:transparent;border:1px solid {{ t.border18 }};border-radius:99px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ t.text }};font-family:inherit;padding:0;transition:border-color 0.25s" style-hover="border-color:#45E0CF">{{ themeIcon }}</button>
+      <a href="https://totemkit.com/shop/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;border:1px solid {{ t.border18 }};border-radius:99px;padding:8px 18px" style-hover="border-color:#45E0CF">Shop ↗</a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO (particles: logo -> ring -> ridge) ============ -->
+  <section id="top" data-screen-label="Hero" data-hero-track="" style="height:320vh;position:relative">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 38%,rgba(69,224,207,0.07),transparent 65%),radial-gradient(ellipse 45% 35% at 78% 72%,rgba(157,123,255,0.06),transparent 70%)"></div>
+      <hero-particles logo-src="assets/logo.png" density="{{ particleDensity }}" reduced-motion="{{ reducedMotion }}" canvas-filter="{{ t.particlesFilter }}" style="position:absolute;inset:0"></hero-particles>
+
+      <!-- phase 0: intro copy -->
+      <div ref="{{ cap0Ref }}" style="position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:9vh;text-align:center;transition:opacity 0.25s">
+        <div style="font-size:12px;letter-spacing:0.35em;text-transform:uppercase;color:{{ t.cyanText }};margin-bottom:18px">Limited-series bandanas · Made in Bulgaria</div>
+        <h1 style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(34px,4.6vw,64px);margin:0 0 14px;line-height:1.05">Wear the wild.</h1>
+        <p style="max-width:520px;margin:0 0 28px;color:{{ t.muted }};font-size:17px;line-height:1.6">Hand-drawn illustrations on bandanas made for mountains, sport and the city.</p>
+        <div style="display:flex;gap:14px">
+          <a href="#featured" style="background:{{ accent }};color:#070B14;font-weight:600;padding:14px 30px;border-radius:99px;font-size:15px" style-hover="filter:brightness(1.15);color:#070B14">Shop the collection</a>
+          <a href="#custom" style="border:1px solid {{ t.border22 }};padding:14px 30px;border-radius:99px;font-size:15px" style-hover="border-color:#FF6B47;color:#FF6B47">Custom bandana</a>
+        </div>
+        <div style="margin-top:6vh;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:{{ t.muted }};animation:pulse 2.4s infinite">Scroll ▾</div>
+      </div>
+
+      <!-- phase 1: ring -->
+      <div ref="{{ cap1Ref }}" style="position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:12vh;text-align:center;opacity:0;transition:opacity 0.25s;pointer-events:none">
+        <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(26px,3.4vw,44px);margin:0 0 10px">One tube. Many ways to wear it.</h2>
+        <p style="color:{{ t.muted }};font-size:16px;margin:0">Around the neck, over the mouth, as a beanie or a balaclava.</p>
+      </div>
+
+      <!-- phase 2: ridge -->
+      <div ref="{{ cap2Ref }}" style="position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:16vh;text-align:center;opacity:0;transition:opacity 0.25s;pointer-events:none">
+        <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(26px,3.4vw,44px);margin:0 0 10px">Born for the ridge.</h2>
+        <p style="color:{{ t.muted }};font-size:16px;margin:0 0 24px">UV 50+ · windproof · breathable — tested where it matters.</p>
+        <a href="#featured" style="background:{{ accent }};color:#070B14;font-weight:600;padding:13px 28px;border-radius:99px;font-size:15px;pointer-events:auto" style-hover="filter:brightness(1.15);color:#070B14">Explore designs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED ============ -->
+  <section id="featured" data-screen-label="Featured" style="position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:110px 40px 40px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:36px">
+      <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(24px,2.8vw,38px);margin:0">Featured drops</h2>
+      <div style="font-size:12px;letter-spacing:0.25em;text-transform:uppercase;color:{{ t.violetText }}">Limited series · numbered runs</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px">
+      <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
+        <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:18px;padding:14px;backdrop-filter:{{ t.panelBlur }};box-shadow:{{ t.panelEdge }};transition:transform 0.3s,border-color 0.3s" style-hover="transform:translateY(-6px);border-color:rgba(69,224,207,0.4)">
+          <div style="position:relative;height:300px;border-radius:12px;overflow:hidden">
+            <image-slot id="{{ p.slot }}" shape="rounded" radius="12" fit="contain" placeholder="{{ p.placeholder }}" src="{{ p.src }}"></image-slot>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 4px 6px">
+            <div>
+              <a href="{{ p.url }}" target="_blank" rel="noopener" style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:500;display:block" style-hover="color:{{ t.cyanText }}">{{ p.name }}</a>
+              <div style="font-size:12px;color:{{ t.muted }};margin-top:3px">{{ p.cat }}</div>
+              <div style="display:flex;gap:6px;margin-top:8px">
+                <sc-for list="{{ p.colors }}" as="c" hint-placeholder-count="1">
+                  <span style="width:14px;height:14px;border-radius:50%;background:{{ c }};border:1px solid {{ t.swatchBorder }};display:block"></span>
+                </sc-for>
+              </div>
+            </div>
+            <a href="{{ p.url }}" target="_blank" rel="noopener" style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:{{ t.cyanText }};border:1px solid rgba(69,224,207,0.35);border-radius:99px;padding:5px 10px;white-space:nowrap;transition:background 0.25s" style-hover="background:rgba(69,224,207,0.12);color:{{ t.cyanText }}">View ↗</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:44px">
+      <a href="https://totemkit.com/shop/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#45E0CF;color:#070B14;font-weight:600;padding:14px 34px;border-radius:99px;font-size:15px" style-hover="filter:brightness(1.15);color:#070B14">Shop all drops ↗</a>
+    </div>
+  </section>
+
+  <!-- ============ BESTSELLERS ============ -->
+  <section id="bestsellers" data-screen-label="Bestsellers" style="position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:70px 40px 40px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:36px">
+      <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(24px,2.8vw,38px);margin:0">Bestsellers</h2>
+      <div style="font-size:12px;letter-spacing:0.25em;text-transform:uppercase;color:{{ t.orangeText }}">Community favourites</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px">
+      <sc-for list="{{ bestsellers }}" as="p" hint-placeholder-count="3">
+        <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:18px;padding:14px;backdrop-filter:{{ t.panelBlur }};box-shadow:{{ t.panelEdge }};transition:transform 0.3s,border-color 0.3s" style-hover="transform:translateY(-6px);border-color:rgba(255,107,71,0.45)">
+          <div style="position:relative;height:300px;border-radius:12px;overflow:hidden">
+            <image-slot id="{{ p.slot }}" shape="rounded" radius="12" fit="contain" placeholder="{{ p.placeholder }}" src="{{ p.src }}"></image-slot>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 4px 6px">
+            <div>
+              <a href="{{ p.url }}" target="_blank" rel="noopener" style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:500;display:block" style-hover="color:{{ t.orangeText }}">{{ p.name }}</a>
+              <div style="font-size:12px;color:{{ t.muted }};margin-top:3px">{{ p.cat }}</div>
+              <div style="display:flex;gap:6px;margin-top:8px">
+                <sc-for list="{{ p.colors }}" as="c" hint-placeholder-count="1">
+                  <span style="width:14px;height:14px;border-radius:50%;background:{{ c }};border:1px solid {{ t.swatchBorder }};display:block"></span>
+                </sc-for>
+              </div>
+            </div>
+            <a href="{{ p.url }}" target="_blank" rel="noopener" style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:{{ t.orangeText }};border:1px solid rgba(255,107,71,0.4);border-radius:99px;padding:5px 10px;white-space:nowrap;transition:background 0.25s" style-hover="background:rgba(255,107,71,0.12);color:{{ t.orangeText }}">View ↗</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" data-screen-label="Features" style="position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:80px 40px">
+    <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(24px,2.8vw,38px);margin:0 0 36px">Built for movement</h2>
+    <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px">
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:14px;padding:16px 14px;backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center" style-hover="border-color:rgba(157,123,255,0.45)">
+        <img src="assets/icon-high-quality-dark.png" alt="High quality" style="width:38px;height:38px;display:{{ t.showDark }}">
+        <img src="assets/icon-high-quality.png" alt="High quality" style="width:38px;height:38px;display:{{ t.showLight }}">
+        <span style="font-size:13px;font-weight:600">High quality</span>
+      </div>
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:14px;padding:16px 14px;backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center" style-hover="border-color:rgba(157,123,255,0.45)">
+        <img src="assets/icon-ultimate-stretch-dark.png" alt="Ultimate stretch" style="width:38px;height:38px;display:{{ t.showDark }}">
+        <img src="assets/icon-ultimate-stretch.png" alt="Ultimate stretch" style="width:38px;height:38px;display:{{ t.showLight }}">
+        <span style="font-size:13px;font-weight:600">Ultimate stretch</span>
+      </div>
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:14px;padding:16px 14px;backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center" style-hover="border-color:rgba(157,123,255,0.45)">
+        <img src="assets/icon-uv50-dark.png" alt="UV 50+" style="width:38px;height:38px;display:{{ t.showDark }}">
+        <img src="assets/icon-uv50.png" alt="UV 50+" style="width:38px;height:38px;display:{{ t.showLight }}">
+        <span style="font-size:13px;font-weight:600">UV 50+</span>
+      </div>
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:14px;padding:16px 14px;backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center" style-hover="border-color:rgba(157,123,255,0.45)">
+        <img src="assets/icon-windproof-dark.png" alt="Windproof" style="width:38px;height:38px;display:{{ t.showDark }}">
+        <img src="assets/icon-windproof.png" alt="Windproof" style="width:38px;height:38px;display:{{ t.showLight }}">
+        <span style="font-size:13px;font-weight:600">Windproof</span>
+      </div>
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:14px;padding:16px 14px;backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center" style-hover="border-color:rgba(157,123,255,0.45)">
+        <img src="assets/icon-breathable-dark.png" alt="Breathable" style="width:38px;height:38px;display:{{ t.showDark }}">
+        <img src="assets/icon-breathable.png" alt="Breathable" style="width:38px;height:38px;display:{{ t.showLight }}">
+        <span style="font-size:13px;font-weight:600">Breathable</span>
+      </div>
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:14px;padding:16px 14px;backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center" style-hover="border-color:rgba(157,123,255,0.45)">
+        <img src="assets/icon-quick-drying-dark.png" alt="Quick-drying" style="width:38px;height:38px;display:{{ t.showDark }}">
+        <img src="assets/icon-quick-drying.png" alt="Quick-drying" style="width:38px;height:38px;display:{{ t.showLight }}">
+        <span style="font-size:13px;font-weight:600">Quick-drying</span>
+      </div>
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:14px;padding:16px 14px;backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center" style-hover="border-color:rgba(157,123,255,0.45)">
+        <img src="assets/icon-soft-dark.png" alt="Soft" style="width:38px;height:38px;display:{{ t.showDark }}">
+        <img src="assets/icon-soft.png" alt="Soft" style="width:38px;height:38px;display:{{ t.showLight }}">
+        <span style="font-size:13px;font-weight:600">Soft</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CUSTOM BANDANA ============ -->
+  <section id="custom" data-screen-label="Custom bandana" style="position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:60px 40px 100px">
+    <div style="position:relative;overflow:hidden;background:linear-gradient(120deg,rgba(255,107,71,0.12),rgba(157,123,255,0.1) 60%,rgba(69,224,207,0.08));backdrop-filter:blur(2px);border:1px solid {{ t.border12 }};border-radius:24px;padding:64px 56px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center">
+      <div>
+        <div style="font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:{{ t.orangeText }};margin-bottom:14px">Custom bandana</div>
+        <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(24px,3vw,40px);margin:0 0 16px;line-height:1.15">Your artwork.<br>Our fabric.</h2>
+        <p style="color:{{ t.muted2 }};font-size:16px;line-height:1.65;max-width:440px;margin:0 0 28px">Teams, events, brands — we print custom limited runs on the same technical lycra as our own series.</p>
+        <a href="https://totemkit.com/custom-bandana/" target="_blank" rel="noopener" style="display:inline-block;background:#FF6B47;color:#070B14;font-weight:600;padding:14px 30px;border-radius:99px;font-size:15px" style-hover="filter:brightness(1.12);color:#070B14">Start a custom run</a>
+      </div>
+      <div style="position:relative;height:340px">
+        <img src="assets/custom-bandana.png" alt="TOTEM custom bandana — Adastra design" style="position:absolute;right:240px;top:-20px;height:380px;transform:rotate(6deg);filter:drop-shadow(0 24px 40px rgba(0,0,0,0.45))">
+        <img src="assets/mascot.png" alt="TOTEM rabbit mascot" style="position:absolute;right:-10px;bottom:-10px;width:150px;animation:floaty 5s ease-in-out infinite;filter:{{ t.mascotFilter }}">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSTAGRAM ============ -->
+  <section id="instagram" data-screen-label="Instagram" style="position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 40px 110px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:30px">
+      <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(24px,2.8vw,38px);margin:0">On the trail</h2>
+      <a href="https://www.instagram.com/totem.kit" target="_blank" rel="noopener" style="color:{{ t.cyanText }};font-size:15px">@totem.kit ↗</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
+      <sc-for list="{{ igSlots }}" as="s" hint-placeholder-count="6">
+        <div style="position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;border:1px solid {{ t.border }}">
+          <image-slot id="{{ s.id }}" shape="rect" placeholder="{{ s.ph }}" src="{{ s.src }}"></image-slot>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" data-screen-label="About" style="position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:40px 40px 110px">
+    <div style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:48px;align-items:center;margin-bottom:56px">
+      <div>
+        <div style="font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:{{ t.cyanText }};margin-bottom:16px">About us</div>
+        <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(24px,2.8vw,38px);line-height:1.2;margin:0 0 22px;text-wrap:balance">Hand-drawn stories, screen-printed by hand</h2>
+        <p style="color:{{ t.muted }};font-size:16px;line-height:1.75;max-width:560px;margin:0 0 14px">TOTEM is an independent design brand focused on handmade bandanas and accessories, featuring our own hand-drawn and screen-printed illustrations.</p>
+        <p style="color:{{ t.muted }};font-size:16px;line-height:1.75;max-width:560px;margin:0">Since 2017, we have been creating pieces that carry stories, symbols, and a sense of individuality.</p>
+      </div>
+      <img src="assets/monster-line.png" alt="TOTEM monster illustration" style="width:100%;max-width:280px;justify-self:center;filter:{{ t.monsterFilter }};opacity:0.85;animation:floaty 5s ease-in-out infinite">
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:18px;padding:28px;display:flex;gap:24px;align-items:center;backdrop-filter:{{ t.panelBlur }};box-shadow:{{ t.panelEdge }}">
+        <img src="assets/about-lidia.png" alt="Lidia Gerdzhikova" style="width:120px;height:120px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid {{ t.border12 }}">
+        <div>
+          <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:17px;margin-bottom:4px">Lidia Gerdzhikova</div>
+          <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:{{ t.cyanText }};margin-bottom:10px">Co-founder</div>
+          <p style="color:{{ t.muted }};font-size:14px;line-height:1.65;margin:0">A Master in Poster Design. She crafts original patterns, brings custom designs to life, and works closely with every client to make their ideas come alive.</p>
+        </div>
+      </div>
+      <div style="background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:18px;padding:28px;display:flex;gap:24px;align-items:center;backdrop-filter:{{ t.panelBlur }};box-shadow:{{ t.panelEdge }}">
+        <img src="assets/about-ivaylo.png" alt="Ivaylo Vinchev / palicha" style="width:120px;height:120px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid {{ t.border12 }}">
+        <div>
+          <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:17px;margin-bottom:4px">Ivaylo Vinchev / palicha</div>
+          <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:{{ t.cyanText }};margin-bottom:10px">Co-founder</div>
+          <p style="color:{{ t.muted }};font-size:14px;line-height:1.65;margin:0">An animation graduate, he turns sketches into screen-printed stories. He creates characters for children's books, blending imagination with a distinct sense of storytelling.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" data-screen-label="Contact" style="position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 40px 110px">
+    <div style="background:{{ t.contactBg }};color:{{ t.contactText }};border:1px solid {{ t.border12 }};border-radius:24px;display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;padding:56px 60px;overflow:hidden;backdrop-filter:{{ t.panelBlur }};box-shadow:{{ t.panelEdge }}">
+      <img src="assets/shop-illustration.png" alt="TOTEM studio storefront illustration" style="width:100%;max-width:400px;display:block;justify-self:center;filter:{{ t.contactIllustrationFilter }}">
+      <div>
+        <div style="font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:{{ t.contactAccent }};margin-bottom:14px">Contact</div>
+        <h2 style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(22px,2.4vw,34px);line-height:1.2;margin:0 0 18px">Come see the studio</h2>
+        <div style="font-size:17px;line-height:1.8;margin-bottom:6px;font-weight:600">Sofia, ul. "Tsar Asen" 25</div>
+        <div style="font-size:15px;color:{{ t.contactAccent }};font-weight:600;margin-bottom:24px">Visits by Appointment</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a href="https://www.instagram.com/totem.kit" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;background:{{ t.contactBtnBg }};color:{{ t.contactBtnText }};font-size:14px;letter-spacing:0.06em;text-transform:uppercase;transition:opacity 0.25s" style-hover="opacity:0.85;color:{{ t.contactBtnText }}">Instagram ↗</a>
+          <a href="https://www.facebook.com/totem.kit" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;border:1px solid {{ t.contactGhostBorder }};color:{{ t.contactText }};font-size:14px;letter-spacing:0.06em;text-transform:uppercase;transition:border-color 0.25s" style-hover="border-color:{{ t.contactText }};color:{{ t.contactText }}">Facebook ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="footer" data-screen-label="Footer" style="position:relative;z-index:2;border-top:1px solid {{ t.border }};background:{{ t.footerBg }};backdrop-filter:{{ t.panelBlur }}">
+    <div style="max-width:1240px;margin:0 auto;padding:80px 40px 0">
+      <div style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(30px,4.6vw,64px);line-height:1.12;letter-spacing:-0.01em;max-width:900px;text-wrap:balance">Limited series. When it's gone, <span style="color:{{ t.cyanText }}">it's gone.</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:36px">
+        <a href="#about" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border:1px solid {{ t.border16 }};border-radius:999px;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;transition:border-color 0.25s,color 0.25s" style-hover="border-color:#45E0CF;color:#45E0CF">About us</a>
+        <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border:1px solid {{ t.border16 }};border-radius:999px;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;transition:border-color 0.25s,color 0.25s" style-hover="border-color:#45E0CF;color:#45E0CF">Contact</a>
+        <a href="#custom" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border:1px solid {{ t.border16 }};border-radius:999px;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;transition:border-color 0.25s,color 0.25s" style-hover="border-color:#45E0CF;color:#45E0CF">Custom bandana</a>
+        <a href="https://www.instagram.com/totem.kit" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border:1px solid rgba(69,224,207,0.5);border-radius:999px;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:{{ t.cyanText }};transition:background 0.25s" style-hover="background:rgba(69,224,207,0.1)">Instagram @totem.kit ↗</a>
+      </div>
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:end;margin-top:64px;padding:28px 0;border-top:1px solid {{ t.border }}">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <img src="assets/logo.png" alt="TOTEM" style="height:28px;width:max-content;display:block;filter:{{ t.logoFilter }}">
+          <p style="color:{{ t.muted }};font-size:15px;line-height:1.7;max-width:380px;margin:0">Limited-series bandanas and neckwear with original illustrations. Designed and made in Sofia, Bulgaria.</p>
+        </div>
+        <div style="text-align:right;font-size:15px;line-height:1.8">
+          <div style="font-size:12px;letter-spacing:0.25em;text-transform:uppercase;color:{{ t.muted }};margin-bottom:8px">Studio</div>
+          <div>Sofia, ul. "Tsar Asen" 25</div>
+          <div style="color:{{ t.cyanText }}">Visits by Appointment</div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1240px;margin:0 auto;padding:18px 40px 26px;border-top:1px solid {{ t.footerTopBorder }};display:flex;justify-content:space-between;gap:20px;font-size:12px;color:{{ t.muted }}">
+      <span>© 2026 TOTEM · totemkit.com</span>
+      <span>Original illustrations. Screen-printed by hand.</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;cyan&quot;,&quot;options&quot;:[&quot;cyan&quot;,&quot;orange&quot;,&quot;violet&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;particleDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let savedTheme = 'dark';
+    try { savedTheme = localStorage.getItem('totem-theme') || 'dark'; } catch (e) {}
+    this.state = { collectionOpen: false, theme: savedTheme };
+    this.navRef = React.createRef();
+    this.cap0Ref = React.createRef();
+    this.cap1Ref = React.createRef();
+    this.cap2Ref = React.createRef();
+  }
+
+  componentDidMount() {
+    let ticking = false;
+    this._onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const track = document.querySelector('[data-hero-track]');
+        const nav = this.navRef.current;
+        const dark = this.state.theme !== 'light';
+        if (nav) {
+          const scrolled = window.scrollY > 40;
+          nav.style.background = scrolled ? (dark ? 'rgba(7,11,20,0.72)' : 'rgba(244,247,250,0.8)') : (dark ? 'rgba(7,11,20,0)' : 'rgba(244,247,250,0)');
+          nav.style.borderBottomColor = scrolled ? (dark ? 'rgba(255,255,255,0.08)' : 'rgba(13,19,32,0.08)') : 'rgba(255,255,255,0)';
+          nav.style.backdropFilter = scrolled ? 'blur(16px)' : 'blur(0px)';
+        }
+        if (!track) return;
+        const r = track.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        const total = r.height - vh;
+        const p = Math.min(1, Math.max(0, -r.top / Math.max(1, total)));
+        const clamp = (v) => Math.min(1, Math.max(0, v));
+        const o0 = 1 - clamp((p - 0.06) / 0.14);
+        const o1 = clamp((p - 0.24) / 0.1) * (1 - clamp((p - 0.5) / 0.1));
+        const o2 = clamp((p - 0.66) / 0.12);
+        const set = (ref, o) => {
+          if (!ref.current) return;
+          ref.current.style.opacity = String(o);
+          ref.current.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
+        };
+        set(this.cap0Ref, o0);
+        set(this.cap1Ref, o1);
+        set(this.cap2Ref, o2);
+      });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onScroll();
+    this.applyTheme();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+  }
+
+  applyTheme() {
+    const dark = this.state.theme !== 'light';
+    document.body.style.background = dark ? '#070B14' : '#F4F7FA';
+    let st = document.getElementById('theme-link-override');
+    if (!st) {
+      st = document.createElement('style');
+      st.id = 'theme-link-override';
+      document.head.appendChild(st);
+    }
+    st.textContent = dark
+      ? ''
+      : 'a { color: #0D1320; } a:hover { color: #0E9C8D; } ::selection { background: rgba(14,156,141,0.22); }';
+  }
+
+  renderVals() {
+    const accents = { cyan: '#45E0CF', orange: '#FF6B47', violet: '#9D7BFF' };
+    const dark = this.state.theme !== 'light';
+    const t = dark ? {
+      bg: '#070B14', text: '#E9F0F7', muted: '#8FA0B5', muted2: '#B7C3D4',
+      panel: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.1)',
+      border12: 'rgba(255,255,255,0.12)', border16: 'rgba(255,255,255,0.16)',
+      border18: 'rgba(255,255,255,0.18)', border22: 'rgba(255,255,255,0.22)',
+      menuBg: 'rgba(13,19,32,0.92)', footerBg: 'rgba(7,11,20,0.9)',
+      swatchBorder: 'rgba(255,255,255,0.35)', footerTopBorder: 'rgba(255,255,255,0.06)',
+      cyanText: '#45E0CF', orangeText: '#FF6B47', violetText: '#9D7BFF',
+      panelEdge: 'none',
+      panelBlur: 'blur(14px)',
+      mascotFilter: 'none',
+      washOpacity: 0,
+      contactBg: 'rgba(255,255,255,0.04)', contactText: '#E9F0F7', contactAccent: '#45E0CF',
+      contactBtnBg: '#E9F0F7', contactBtnText: '#070B14', contactGhostBorder: 'rgba(255,255,255,0.3)',
+      contactIllustrationFilter: 'invert(1) hue-rotate(180deg)',
+      showDark: 'block', showLight: 'none', monsterFilter: 'invert(1)', particlesFilter: 'none', logoFilter: 'none',
+    } : {
+      bg: '#F4F7FA', text: '#0D1320', muted: '#5B6B80', muted2: '#44546A',
+      panel: 'rgba(255,255,255,0.2)',
+      panelBlur: 'blur(5px)',
+      panelEdge: 'inset 0 1px 0 rgba(255,255,255,0.9), inset 1px 0 0 rgba(255,255,255,0.5), 0 8px 24px rgba(13,19,32,0.06)',
+      mascotFilter: 'invert(0.88)',
+      washOpacity: 1, border: 'rgba(13,19,32,0.1)',
+      border12: 'rgba(13,19,32,0.12)', border16: 'rgba(13,19,32,0.18)',
+      border18: 'rgba(13,19,32,0.2)', border22: 'rgba(13,19,32,0.25)',
+      menuBg: 'rgba(255,255,255,0.95)', footerBg: 'rgba(255,255,255,0.5)',
+      swatchBorder: 'rgba(13,19,32,0.25)', footerTopBorder: 'rgba(13,19,32,0.06)',
+      cyanText: '#0E9C8D', orangeText: '#E14E2B', violetText: '#7A4FE8',
+      contactBg: 'rgba(255,255,255,0.6)', contactText: '#0D1320', contactAccent: '#0E9C8D',
+      contactBtnBg: '#0D1320', contactBtnText: '#E9F0F7', contactGhostBorder: 'rgba(13,19,32,0.3)',
+      contactIllustrationFilter: 'none',
+      showDark: 'none', showLight: 'block', monsterFilter: 'none', particlesFilter: 'brightness(0.55) saturate(1.5)', logoFilter: 'none',
+    };
+    return {
+      t: t,
+
+      themeIcon: dark ? '\u2600' : '\u263E',
+      themeLabel: dark ? 'Switch to light theme' : 'Switch to dark theme',
+      toggleTheme: () => {
+        const next = this.state.theme === 'light' ? 'dark' : 'light';
+        try { localStorage.setItem('totem-theme', next); } catch (e) {}
+        this.setState({ theme: next }, () => {
+          this.applyTheme();
+          if (this._onScroll) this._onScroll();
+        });
+      },
+      accent: accents[this.props.accent ?? 'cyan'] || '#45E0CF',
+      particleDensity: String(this.props.particleDensity ?? 1),
+      reducedMotion: String(this.props.reduceMotion ?? false),
+      collectionOpen: this.state.collectionOpen,
+      openCollection: () => this.setState({ collectionOpen: true }),
+      closeCollection: () => this.setState({ collectionOpen: false }),
+      navRef: this.navRef,
+      cap0Ref: this.cap0Ref,
+      cap1Ref: this.cap1Ref,
+      cap2Ref: this.cap2Ref,
+      categories: [
+        { name: 'One-layer Lycra', detail: 'lightweight bandanas', url: 'https://totemkit.com/produkt-kategoriya/one-layer-lycra/' },
+        { name: 'Lycra + Lycra', detail: 'double-layer bandanas', url: 'https://totemkit.com/produkt-kategoriya/lycra-lycra/' },
+        { name: 'Thermo Lycra', detail: 'warm single-layer', url: 'https://totemkit.com/produkt-kategoriya/thermo-lycra/' },
+        { name: 'Lycra + Polar', detail: 'fleece-lined for winter', url: 'https://totemkit.com/produkt-kategoriya/lycra-polar/' },
+      ],
+      featured: [
+        { name: "The Ant's Dream", cat: 'Neckwear', slot: 'feat-ants-dream', placeholder: "Drop photo: The Ant's Dream", src: 'assets/mravka_tymno_sinio.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d1%81%d1%8a%d0%bd%d1%8f%d1%82-%d0%bd%d0%b0-%d0%bc%d1%80%d0%b0%d0%b2%d0%ba%d0%b0%d1%82%d0%b0-%d1%82%d1%8a%d0%bc%d0%bd%d0%be-%d1%81%d0%b8%d0%bd%d1%8c%d0%be/', colors: ['#4A72B0', '#F96A80', '#19B4D6'] },
+        { name: 'Chemistry\n', cat: 'Neckwear', slot: 'feat-cameras', placeholder: 'Drop photo: Cameras', src: 'assets/fotoaparati_sinio.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d1%85%d0%b8%d0%bc%d0%b8%d1%8f-%d0%bf%d0%be%d0%bb%d0%b0%d1%80-%d1%81%d0%b8%d0%bd%d1%8f/', colors: ['#4A72B0'] },
+        { name: 'Music\n', cat: 'Neckwear', slot: 'feat-bear-power', placeholder: 'Drop photo: Bear Power', src: 'assets/mechki_rozova.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d0%bc%d1%83%d0%b7%d0%b8%d0%ba%d0%b0-%d1%82%d0%b5%d1%80%d0%bc%d0%be-%d0%bb%d0%b8%d0%ba%d1%80%d0%b0/', colors: ['#F96A80'] },
+        { name: 'Pirates', cat: 'Neckwear', slot: 'feat-pirates', placeholder: 'Drop photo: Pirates', src: 'assets/pirati_cherveno.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d0%bf%d0%b8%d1%80%d0%b0%d1%82%d0%b8-%d1%87%d0%b5%d1%80%d0%b2%d0%b5%d0%bd%d0%be-%d0%bf%d0%be%d0%bb%d0%b0%d1%80/', colors: ['#4B2AA6', '#E8341C', '#A8CBF0', '#F9A85D'] },
+        { name: 'Don Quixote', cat: 'Neckwear', slot: 'feat-don-kihot', placeholder: 'Drop photo: Don Quixote', src: 'assets/ig-don-kihot.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d0%b4%d0%be%d0%bd-%d0%ba%d0%b8%d1%85%d0%be%d1%82-%d1%81%d0%b8%d0%b2%d0%b0-%d1%82%d0%b5%d1%80%d0%bc%d0%be-%d0%bb%d0%b8%d0%ba%d1%80%d0%b0/', colors: ['#C8CDD4'] },
+        { name: 'The Sorceress', cat: 'Neckwear', slot: 'feat-magiosnica', placeholder: 'Drop photo: The Sorceress', src: 'assets/ig-magiosnica.png', url: 'https://totemkit.com/produkt/bandana_magiosnica_rozova_polar/', colors: ['#F96A80'] },
+        { name: 'Samurai', cat: 'Neckwear', slot: 'feat-samurai', placeholder: 'Drop photo: Samurai', src: 'assets/ig-samurai.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d1%81%d0%b0%d0%bc%d1%83%d1%80%d0%b0%d0%b9-%d1%81%d0%b8%d0%bd%d1%8c%d0%be-%d0%bf%d0%be%d0%bb%d0%b0%d1%80/', colors: ['#A8CBF0'] },
+        { name: "The Ant's Dream", cat: 'Neckwear · pink', slot: 'feat-mravka-rozovo', placeholder: "Drop photo: The Ant's Dream pink", src: 'assets/ig-mravka-rozovo.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d1%81%d1%8a%d0%bd%d1%8f%d1%82-%d0%bd%d0%b0-%d0%bc%d1%80%d0%b0%d0%b2%d0%ba%d0%b0%d1%82%d0%b0-%d1%80%d0%be%d0%b7%d0%be%d0%b2%d0%be-%d0%bf%d0%be%d0%bb%d0%b0/', colors: ['#4A72B0', '#F96A80', '#19B4D6', '#E8341C'] },
+      ],
+      bestsellers: [
+        { name: 'Forest Adventure', cat: 'Neckwear · 2 colours', slot: 'best-forest-adventure', placeholder: 'Drop photo: Forest Adventure', src: 'assets/gorsko_prikluchenie_zeleno.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d0%b3%d0%be%d1%80%d1%81%d0%ba%d0%be-%d0%bf%d1%80%d0%b8%d0%ba%d0%bb%d1%8e%d1%87%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%be%d0%bb%d0%b0%d1%80-2/', colors: ['#2E4638', '#18263E'] },
+        { name: 'Forest', cat: 'Neckwear · 3 colours', slot: 'best-forest', placeholder: 'Drop photo: Forest', src: 'assets/borova-gora_cherno.png', url: 'https://totemkit.com/shop/', colors: ['#111111', '#E8341C', '#F96A80'] },
+        { name: 'Fiurfiun\n', cat: 'Neckwear · 2 colours', slot: 'best-bears', placeholder: 'Drop photo: Bears', src: 'assets/fiurfiun_sinio.png', url: 'https://totemkit.com/produkt/%d0%b1%d0%b0%d0%bd%d0%b4%d0%b0%d0%bd%d0%b0-%d1%84%d1%8e%d1%80%d1%84%d1%8e%d0%bd-%d0%b7%d0%b5%d0%bb%d0%b5%d0%bd%d0%be-%d0%bf%d0%be%d0%bb%d0%b0%d1%80/', colors: ['#29C3E8', '#1B8A66'] },
+      ],
+      igSlots: [
+        'assets/trail-1.jpg',
+        'assets/trail-2.jpg',
+        'assets/trail-3.jpg',
+        'assets/trail-4.jpg',
+        'assets/trail-5.jpg',
+        'assets/trail-6.jpg',
+      ].map((src, i) => ({ id: 'trail-photo-' + (i + 1), ph: '@totem.kit', src: src })),
+    };
+  }
+}
+</script>
+</body>
+</html>
