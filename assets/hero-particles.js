@@ -7,10 +7,11 @@
   const PALETTE = ['#45E0CF', '#45E0CF', '#45E0CF', '#FF6B47', '#9D7BFF'];
 
   class HeroParticles extends HTMLElement {
-    static get observedAttributes() { return ['canvas-filter']; }
+    static get observedAttributes() { return ['canvas-filter', 'reduced-motion']; }
 
     attributeChangedCallback(name, oldV, newV) {
       if (name === 'canvas-filter' && this.canvas) this.canvas.style.filter = newV || 'none';
+      if (name === 'reduced-motion' && this._updateMotion) this._updateMotion();
     }
 
     connectedCallback() {
@@ -28,7 +29,18 @@
       this.progress = 0;
       this.t = 0;
       this.dead = false;
-      this.reduced = this.getAttribute('reduced-motion') === 'true';
+      this._motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      this._updateMotion = () => {
+        const reduced = this.getAttribute('reduced-motion') === 'true' || this._motionQuery.matches;
+        if (this.reduced === reduced) return;
+        this.reduced = reduced;
+        if (this._loop) {
+          cancelAnimationFrame(this._frame);
+          this._frame = requestAnimationFrame(this._loop);
+        }
+      };
+      this._updateMotion();
+      this._motionQuery.addEventListener('change', this._updateMotion);
 
       this._resize = () => this.resize();
       window.addEventListener('resize', this._resize);
@@ -36,19 +48,29 @@
 
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.onload = () => { this.logoImg = img; this.buildTargets(); this.spawn(); };
+      img.onload = () => {
+        this.logoImg = img;
+        this.buildTargets();
+        this.spawn();
+        if (this.reduced) this.step();
+      };
       img.src = this.getAttribute('logo-src') || '';
 
-      const loop = () => {
+      this._loop = () => {
+        this._frame = 0;
         if (this.dead) return;
         this.step();
-        requestAnimationFrame(loop);
+        if (!this.reduced) this._frame = requestAnimationFrame(this._loop);
       };
-      requestAnimationFrame(loop);
+      this._frame = requestAnimationFrame(this._loop);
     }
 
     disconnectedCallback() {
       this.dead = true;
+      cancelAnimationFrame(this._frame);
+      this._frame = 0;
+      this._loop = null;
+      this._motionQuery.removeEventListener('change', this._updateMotion);
       window.removeEventListener('resize', this._resize);
       if (this.canvas && this.canvas.parentNode) this.canvas.parentNode.removeChild(this.canvas);
     }
@@ -61,6 +83,7 @@
       this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       this.W = w; this.H = h;
       if (this.logoImg) { this.buildTargets(); this.retarget(); }
+      if (this.reduced) this.step();
     }
 
     count() {
@@ -184,9 +207,9 @@
 
     step() {
       const { ctx, W, H } = this;
-      this.t += 0.016;
+      if (!this.reduced) this.t += 0.016;
       const p = this.reduced ? 0 : this.readProgress();
-      this.progress = this.progress + (p - this.progress) * 0.12;
+      this.progress = this.reduced ? 0 : this.progress + (p - this.progress) * 0.12;
 
       ctx.clearRect(0, 0, W, H);
       if (!this.particles.length) return;
@@ -198,7 +221,7 @@
       const m2 = smooth((P - 0.58) / 0.28);   // ring->ridge
       const vh = window.innerHeight || 1;
       const m3t = this.reduced ? 0 : smooth(this.beyond / (vh * 0.6)); // ridge->swarm
-      this.m3 = (this.m3 || 0) + (m3t - (this.m3 || 0)) * 0.1;
+      this.m3 = this.reduced ? 0 : (this.m3 || 0) + (m3t - (this.m3 || 0)) * 0.1;
       const m3 = this.m3;
       const spin = this.t * 0.35;
       const { logo, ring, ridge } = this.targets;
@@ -242,7 +265,7 @@
 
         // idle shimmer
         const jig = this.reduced ? 0 : Math.sin(this.t * 1.4 + pt.j) * 1.2;
-        const k = 0.085 + (this.m3 || 0) * 0.1;      // follow scroll more tightly in swarm mode
+        const k = this.reduced ? 1 : 0.085 + (this.m3 || 0) * 0.1; // follow scroll more tightly in swarm mode
 
         pt.x += (tx - pt.x) * k;
         pt.y += (ty + jig - pt.y) * k;
